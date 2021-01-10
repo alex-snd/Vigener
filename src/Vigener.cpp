@@ -13,7 +13,6 @@ void checkFile(std::string fileName)
 	if (!temp.is_open())
 	{
 		std::cout << "Невозможно открыть файл '" << fileName << "'\n";
-		system("pause");
 		exit(0);
 	}
 	else
@@ -28,7 +27,6 @@ void checkFile(std::string fileName)
 		temp.close();
 
 		std::cout << "Файл '" << fileName << "' пуст!\n";
-		system("pause");
 		exit(0);
 
 	}
@@ -411,7 +409,6 @@ void findKeyValue(std::string encryptedText, std::string analiticalTextFileName,
 
 	if (analiticalText.size() < columns[1].size()) {
 		std::cout << "Аналитический текст получился меньше зашифрованного текста!\nВозможно несоответствие алфавитов!\n";
-		system("pause");
 		exit(0);
 	}
 
