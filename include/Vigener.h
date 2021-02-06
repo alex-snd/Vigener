@@ -87,7 +87,7 @@ public:
 };
 
 
-//работа со строками
+//СЂР°Р±РѕС‚Р° СЃРѕ СЃС‚СЂРѕРєР°РјРё
 class isAlpha {
 public:
 	std::string str;

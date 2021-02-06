@@ -12,7 +12,7 @@ void checkFile(std::string fileName)
 
 	if (!temp.is_open())
 	{
-		std::cout << "Невозможно открыть файл '" << fileName << "'\n";
+		std::cout << "РќРµРІРѕР·РјРѕР¶РЅРѕ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» '" << fileName << "'\n";
 		exit(0);
 	}
 	else
@@ -26,7 +26,7 @@ void checkFile(std::string fileName)
 		}
 		temp.close();
 
-		std::cout << "Файл '" << fileName << "' пуст!\n";
+		std::cout << "Р¤Р°Р№Р» '" << fileName << "' РїСѓСЃС‚!\n";
 		exit(0);
 
 	}
@@ -76,9 +76,9 @@ void save(std::string key, std::vector<std::string>& columns, std::string decryp
 {
 	std::ofstream out(decryptedTextFileName, std::ios::app);
 
-	out << "Ключ: " << key << "\n\n";
+	out << "РљР»СЋС‡: " << key << "\n\n";
 
-	out << "Открытый текст:\n";
+	out << "РћС‚РєСЂС‹С‚С‹Р№ С‚РµРєСЃС‚:\n";
 
 	decrypt(key, columns);
 
@@ -161,7 +161,7 @@ void generaateKey(std::vector<Frequency>& columnsFrequency, std::string& key, in
 	int j = 0;
 	int shiftFor = shift;
 
-	if (key[groupNumber] == 'а')
+	if (key[groupNumber] == 'Р°')
 	{
 		if (shift < 0)
 			shift += cipherAlphabetSize;
@@ -237,9 +237,9 @@ void displayWorkSpace(Frequency analyticalTextFrequency, std::vector<Frequency> 
 		}
 
 		if (count >= 10)
-			std::cout << count << "-я группа";
+			std::cout << count << "-СЏ РіСЂСѓРїРїР°";
 		else
-			std::cout << count << "-я группа ";
+			std::cout << count << "-СЏ РіСЂСѓРїРїР° ";
 
 		for (auto i : it.info)
 			if (i.count >= threshold)
@@ -262,7 +262,7 @@ void displayWorkSpace(Frequency analyticalTextFrequency, std::vector<Frequency> 
 		}
 	}
 
-	std::cout << "\nПредполагаемый ключ: " << key << "\n";
+	std::cout << "\nРџСЂРµРґРїРѕР»Р°РіР°РµРјС‹Р№ РєР»СЋС‡: " << key << "\n";
 }
 
 void determineKey(Frequency analyticalTextFrequency, std::vector<Frequency> columnsFrequency, int cipherAlphabetSize, std::vector<std::string> columns, std::string decryptedTextFileName)
@@ -273,12 +273,12 @@ void determineKey(Frequency analyticalTextFrequency, std::vector<Frequency> colu
 	std::string key;
 
 	for (auto i = 0; i < keyLength; i++)
-		key += "а";
+		key += "Р°";
 
 	while (true)
 	{
 		displayWorkSpace(analyticalTextFrequency, columnsFrequency, key, groupNumber);
-		std::cout << "Группа: ";
+		std::cout << "Р“СЂСѓРїРїР°: ";
 		std::cin >> groupNumber;
 
 		if (groupNumber == 0)
@@ -293,7 +293,7 @@ void determineKey(Frequency analyticalTextFrequency, std::vector<Frequency> colu
 
 		if (groupNumber < -2 || groupNumber > keyLength)
 		{
-			std::cout << "Неверные данные.\n";
+			std::cout << "РќРµРІРµСЂРЅС‹Рµ РґР°РЅРЅС‹Рµ.\n";
 			system("pause");
 			continue;
 		}
@@ -306,25 +306,25 @@ void determineKey(Frequency analyticalTextFrequency, std::vector<Frequency> colu
 
 		while (true)
 		{
-			std::cout << "Сдвиг: ";
+			std::cout << "РЎРґРІРёРі: ";
 			std::cin >> shift;
 
 			if (shift == 0)
 				break;
 
-			if (groupNumber == -2 && abs(shift - 1) < keyLength)  //отмена всех действий для группы с номером shift -1
+			if (groupNumber == -2 && abs(shift - 1) < keyLength)  //РѕС‚РјРµРЅР° РІСЃРµС… РґРµР№СЃС‚РІРёР№ РґР»СЏ РіСЂСѓРїРїС‹ СЃ РЅРѕРјРµСЂРѕРј shift -1
 			{
 				std::sort((columnsFrequency[shift - 1.0]).info.begin(), (columnsFrequency[shift - 1.0]).info.end(), Compare(alphabet));
-				key[shift - 1.0] = 'а';
+				key[shift - 1.0] = 'Р°';
 
 				displayWorkSpace(analyticalTextFrequency, columnsFrequency, key, groupNumber);
-				std::cout << "Группа: " << groupNumber << "\n";
+				std::cout << "Р“СЂСѓРїРїР°: " << groupNumber << "\n";
 				continue;
 			}
 
 			if (abs(shift) > cipherAlphabetSize || abs(groupNumber - 1) > keyLength)
 			{
-				std::cout << "Неверные данные.\n";
+				std::cout << "РќРµРІРµСЂРЅС‹Рµ РґР°РЅРЅС‹Рµ.\n";
 				system("pause");
 				continue;
 			}
@@ -333,7 +333,7 @@ void determineKey(Frequency analyticalTextFrequency, std::vector<Frequency> colu
 			generaateKey(columnsFrequency, key, groupNumber, shift, cipherAlphabetSize);
 
 			displayWorkSpace(analyticalTextFrequency, columnsFrequency, key, groupNumber);
-			std::cout << "Группа: " << groupNumber + 1 << "\n";
+			std::cout << "Р“СЂСѓРїРїР°: " << groupNumber + 1 << "\n";
 		}
 	}
 
@@ -379,7 +379,7 @@ void calculateFrequency(std::string text, Frequency& freq)
 	std::sort(freq.info.begin(), freq.info.end(), Compare(alphabet));
 }
 
-void createColumns(std::string encryptedText, std::vector<std::string>& columns)  // не использет последние символы (поледнюю строку т.к. она может быть не полной)
+void createColumns(std::string encryptedText, std::vector<std::string>& columns)  // РЅРµ РёСЃРїРѕР»СЊР·РµС‚ РїРѕСЃР»РµРґРЅРёРµ СЃРёРјРІРѕР»С‹ (РїРѕР»РµРґРЅСЋСЋ СЃС‚СЂРѕРєСѓ С‚.Рє. РѕРЅР° РјРѕР¶РµС‚ Р±С‹С‚СЊ РЅРµ РїРѕР»РЅРѕР№)
 {
 	std::string temp;
 	int size = (int)encryptedText.size() / keyLength;
@@ -401,23 +401,23 @@ void findKeyValue(std::string encryptedText, std::string analiticalTextFileName,
 	std::vector<Frequency>  columnsFrequency;
 	Frequency analyticalTextFrequency;
 
-	createColumns(encryptedText, columns);  //формируем массив строк из шифртекста по столбцам
+	createColumns(encryptedText, columns);  //С„РѕСЂРјРёСЂСѓРµРј РјР°СЃСЃРёРІ СЃС‚СЂРѕРє РёР· С€РёС„СЂС‚РµРєСЃС‚Р° РїРѕ СЃС‚РѕР»Р±С†Р°Рј
 
 
-	readFile(analiticalText, analiticalTextFileName);  //считываем аналилитечкий текст
+	readFile(analiticalText, analiticalTextFileName);  //СЃС‡РёС‚С‹РІР°РµРј Р°РЅР°Р»РёР»РёС‚РµС‡РєРёР№ С‚РµРєСЃС‚
 	deleteForbiddenSymbols(analiticalText);
 
 	if (analiticalText.size() < columns[1].size()) {
-		std::cout << "Аналитический текст получился меньше зашифрованного текста!\nВозможно несоответствие алфавитов!\n";
+		std::cout << "РђРЅР°Р»РёС‚РёС‡РµСЃРєРёР№ С‚РµРєСЃС‚ РїРѕР»СѓС‡РёР»СЃСЏ РјРµРЅСЊС€Рµ Р·Р°С€РёС„СЂРѕРІР°РЅРЅРѕРіРѕ С‚РµРєСЃС‚Р°!\nР’РѕР·РјРѕР¶РЅРѕ РЅРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ Р°Р»С„Р°РІРёС‚РѕРІ!\n";
 		exit(0);
 	}
 
-	analiticalText.erase(columns[1].size(), analiticalText.size());  // удаляем лишний аналитический текст
+	analiticalText.erase(columns[1].size(), analiticalText.size());  // СѓРґР°Р»СЏРµРј Р»РёС€РЅРёР№ Р°РЅР°Р»РёС‚РёС‡РµСЃРєРёР№ С‚РµРєСЃС‚
 
-	calculateFrequency(analiticalText, analyticalTextFrequency);  // частотный анализ аналитического текста
+	calculateFrequency(analiticalText, analyticalTextFrequency);  // С‡Р°СЃС‚РѕС‚РЅС‹Р№ Р°РЅР°Р»РёР· Р°РЅР°Р»РёС‚РёС‡РµСЃРєРѕРіРѕ С‚РµРєСЃС‚Р°
 
 	Frequency buffEncryptedTextFrequency;
-	for (auto it : columns)  //в цикле формируем частотный анализ шифроткста по группам (по столбикам)
+	for (auto it : columns)  //РІ С†РёРєР»Рµ С„РѕСЂРјРёСЂСѓРµРј С‡Р°СЃС‚РѕС‚РЅС‹Р№ Р°РЅР°Р»РёР· С€РёС„СЂРѕС‚РєСЃС‚Р° РїРѕ РіСЂСѓРїРїР°Рј (РїРѕ СЃС‚РѕР»Р±РёРєР°Рј)
 	{
 		buffEncryptedTextFrequency.info.clear();
 		calculateFrequency(it, buffEncryptedTextFrequency);
@@ -450,11 +450,11 @@ void findKeyLength(std::string encryptedText)
 		coincidenceCount.push_back((double)count / encryptedText.size());
 	}
 
-	std::cout << "Вероятные длины ключей: \n";
+	std::cout << "Р’РµСЂРѕСЏС‚РЅС‹Рµ РґР»РёРЅС‹ РєР»СЋС‡РµР№: \n";
 	for (auto it = 0; it < maxKeyLength; it++)
 		std::cout << std::setw(3) << it + 1 << " - " << coincidenceCount[it] << "\n";
 
-	std::cout << "Введите длину ключа: \n";
+	std::cout << "Р’РІРµРґРёС‚Рµ РґР»РёРЅСѓ РєР»СЋС‡Р°: \n";
 	std::cin >> keyLength;
 }
 
@@ -484,45 +484,45 @@ void parse_arguments(int argc, char* argv[], std::string& analiticalTextFileName
 {
 	if (cmdOptionExists(argv, argv + argc, "-h"))
 	{
-		std::cout << "Использование: Vigener -i [путь к файлу с шифртекстом] -ia [путь к файлу с аналитическим текстом]\n\n";
-		std::cout << "Параметры:\n\n";
-		std::cout << "-i  Задает путь к файлу с шифртекстом\n";
-		std::cout << "-ia Задает путь к файлу с аналитическим текстом\n";
-		std::cout << "-o  Задает путь к файлу для сохранения результата работы программы. По умолчанию - путь файла шифртекста с меткой {processed}\n";
-		std::cout << "-a  Задает алфавит шифртекста. По умолчанию - кириллица\n";
-		std::cout << "-af Задает путь к файлу с алфавитом шифртекста\n";
-		std::cout << "-t  Задает порог для выделения статистики. По умолчанию 6\n";
-		std::cout << "-k  Задает длину ключа\n";
-		std::cout << "-mk Задает максимальную длину ключа\n\n";
+		std::cout << "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ: Vigener -i [РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ СЃ С€РёС„СЂС‚РµРєСЃС‚РѕРј] -ia [РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ СЃ Р°РЅР°Р»РёС‚РёС‡РµСЃРєРёРј С‚РµРєСЃС‚РѕРј]\n\n";
+		std::cout << "РџР°СЂР°РјРµС‚СЂС‹:\n\n";
+		std::cout << "-i  Р—Р°РґР°РµС‚ РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ СЃ С€РёС„СЂС‚РµРєСЃС‚РѕРј\n";
+		std::cout << "-ia Р—Р°РґР°РµС‚ РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ СЃ Р°РЅР°Р»РёС‚РёС‡РµСЃРєРёРј С‚РµРєСЃС‚РѕРј\n";
+		std::cout << "-o  Р—Р°РґР°РµС‚ РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ СЂРµР·СѓР»СЊС‚Р°С‚Р° СЂР°Р±РѕС‚С‹ РїСЂРѕРіСЂР°РјРјС‹. РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ - РїСѓС‚СЊ С„Р°Р№Р»Р° С€РёС„СЂС‚РµРєСЃС‚Р° СЃ РјРµС‚РєРѕР№ {processed}\n";
+		std::cout << "-a  Р—Р°РґР°РµС‚ Р°Р»С„Р°РІРёС‚ С€РёС„СЂС‚РµРєСЃС‚Р°. РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ - РєРёСЂРёР»Р»РёС†Р°\n";
+		std::cout << "-af Р—Р°РґР°РµС‚ РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ СЃ Р°Р»С„Р°РІРёС‚РѕРј С€РёС„СЂС‚РµРєСЃС‚Р°\n";
+		std::cout << "-t  Р—Р°РґР°РµС‚ РїРѕСЂРѕРі РґР»СЏ РІС‹РґРµР»РµРЅРёСЏ СЃС‚Р°С‚РёСЃС‚РёРєРё. РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ 6\n";
+		std::cout << "-k  Р—Р°РґР°РµС‚ РґР»РёРЅСѓ РєР»СЋС‡Р°\n";
+		std::cout << "-mk Р—Р°РґР°РµС‚ РјР°РєСЃРёРјР°Р»СЊРЅСѓСЋ РґР»РёРЅСѓ РєР»СЋС‡Р°\n\n";
 
-		std::cout << "При вводе номера группы также можно указать следуюшие значения:\n\n";
-		std::cout << " 0: выход из программы с сохранением результата работы. Ctrl + C - выход без сохранения результата\n";
-		std::cout << "-1: вывести декодированный шифртекст при текущем ключе\n";
-		std::cout << "-2: перейти в режим отмены сдвигов в группах. При вводе сдвига нужно указать номер группу,\nдля которой необходимо отменить все действия.\nДля выхода из режима необходимо ввести значение 0 в поле номера группы.\n\n";
-		std::cout << "При вводе сдвига группы указывается положительное или отрицательное значение для\nциклического сдвига статистики вправо или влево соответсвенно.\nДля выхода из текушей группы необходимо ввести значение 0 в поле сдвига.\n\n";
+		std::cout << "РџСЂРё РІРІРѕРґРµ РЅРѕРјРµСЂР° РіСЂСѓРїРїС‹ С‚Р°РєР¶Рµ РјРѕР¶РЅРѕ СѓРєР°Р·Р°С‚СЊ СЃР»РµРґСѓСЋС€РёРµ Р·РЅР°С‡РµРЅРёСЏ:\n\n";
+		std::cout << " 0: РІС‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹ СЃ СЃРѕС…СЂР°РЅРµРЅРёРµРј СЂРµР·СѓР»СЊС‚Р°С‚Р° СЂР°Р±РѕС‚С‹. Ctrl + C - РІС‹С…РѕРґ Р±РµР· СЃРѕС…СЂР°РЅРµРЅРёСЏ СЂРµР·СѓР»СЊС‚Р°С‚Р°\n";
+		std::cout << "-1: РІС‹РІРµСЃС‚Рё РґРµРєРѕРґРёСЂРѕРІР°РЅРЅС‹Р№ С€РёС„СЂС‚РµРєСЃС‚ РїСЂРё С‚РµРєСѓС‰РµРј РєР»СЋС‡Рµ\n";
+		std::cout << "-2: РїРµСЂРµР№С‚Рё РІ СЂРµР¶РёРј РѕС‚РјРµРЅС‹ СЃРґРІРёРіРѕРІ РІ РіСЂСѓРїРїР°С…. РџСЂРё РІРІРѕРґРµ СЃРґРІРёРіР° РЅСѓР¶РЅРѕ СѓРєР°Р·Р°С‚СЊ РЅРѕРјРµСЂ РіСЂСѓРїРїСѓ,\nРґР»СЏ РєРѕС‚РѕСЂРѕР№ РЅРµРѕР±С…РѕРґРёРјРѕ РѕС‚РјРµРЅРёС‚СЊ РІСЃРµ РґРµР№СЃС‚РІРёСЏ.\nР”Р»СЏ РІС‹С…РѕРґР° РёР· СЂРµР¶РёРјР° РЅРµРѕР±С…РѕРґРёРјРѕ РІРІРµСЃС‚Рё Р·РЅР°С‡РµРЅРёРµ 0 РІ РїРѕР»Рµ РЅРѕРјРµСЂР° РіСЂСѓРїРїС‹.\n\n";
+		std::cout << "РџСЂРё РІРІРѕРґРµ СЃРґРІРёРіР° РіСЂСѓРїРїС‹ СѓРєР°Р·С‹РІР°РµС‚СЃСЏ РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ РёР»Рё РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґР»СЏ\nС†РёРєР»РёС‡РµСЃРєРѕРіРѕ СЃРґРІРёРіР° СЃС‚Р°С‚РёСЃС‚РёРєРё РІРїСЂР°РІРѕ РёР»Рё РІР»РµРІРѕ СЃРѕРѕС‚РІРµС‚СЃРІРµРЅРЅРѕ.\nР”Р»СЏ РІС‹С…РѕРґР° РёР· С‚РµРєСѓС€РµР№ РіСЂСѓРїРїС‹ РЅРµРѕР±С…РѕРґРёРјРѕ РІРІРµСЃС‚Рё Р·РЅР°С‡РµРЅРёРµ 0 РІ РїРѕР»Рµ СЃРґРІРёРіР°.\n\n";
 
 		exit(0);
 	}
 
-	// Инициализация encryptedTextFileName
+	// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ encryptedTextFileName
 	if (cmdOptionExists(argv, argv + argc, "-i"))
 		encryptedTextFileName = getCmdOption(argc, argv, "-i");
 	else
 	{
-		std::cout << "Необходимо указать путь к файлу с шифртекстом.\nИспользуйте параметр -i.\n\n";
+		std::cout << "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ СЃ С€РёС„СЂС‚РµРєСЃС‚РѕРј.\nРСЃРїРѕР»СЊР·СѓР№С‚Рµ РїР°СЂР°РјРµС‚СЂ -i.\n\n";
 		exit(0);
 	}
 
-	// Инициализация analiticalTextFileName
+	// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ analiticalTextFileName
 	if (cmdOptionExists(argv, argv + argc, "-ia"))
 		analiticalTextFileName = getCmdOption(argc, argv, "-ia");
 	else
 	{
-		std::cout << "Необходимо указать путь к файлу с аналитическим текстом.\nИспользуйте параметр -ia.\n\n";
+		std::cout << "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ СЃ Р°РЅР°Р»РёС‚РёС‡РµСЃРєРёРј С‚РµРєСЃС‚РѕРј.\nРСЃРїРѕР»СЊР·СѓР№С‚Рµ РїР°СЂР°РјРµС‚СЂ -ia.\n\n";
 		exit(0);
 	}
 
-	// Инициализация decryptedTextFileName
+	// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ decryptedTextFileName
 	if (cmdOptionExists(argv, argv + argc, "-o"))
 		decryptedTextFileName = getCmdOption(argc, argv, "-o");
 	else
@@ -536,15 +536,15 @@ void parse_arguments(int argc, char* argv[], std::string& analiticalTextFileName
 			decryptedTextFileName += " {processed}";
 	}
 
-	// Инициализация alphabet
+	// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ alphabet
 	if (cmdOptionExists(argv, argv + argc, "-a"))
 		alphabet = getCmdOption(argc, argv, "-a");
 	else if (cmdOptionExists(argv, argv + argc, "-af"))
 		readFile(alphabet, getCmdOption(argc, argv, "-af"));
 	else
-		alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+		alphabet = "Р°Р±РІРіРґРµС‘Р¶Р·РёР№РєР»РјРЅРѕРїСЂСЃС‚СѓС„С…С†С‡С€С‰СЉС‹СЊСЌСЋСЏ";
 
-	// Инициализация threshold
+	// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ threshold
 	if (cmdOptionExists(argv, argv + argc, "-t"))
 	{
 		try
@@ -556,14 +556,14 @@ void parse_arguments(int argc, char* argv[], std::string& analiticalTextFileName
 		}
 		catch (...)
 		{
-			std::cout << "Неверно указан порог - положитльное число.\n\n";
+			std::cout << "РќРµРІРµСЂРЅРѕ СѓРєР°Р·Р°РЅ РїРѕСЂРѕРі - РїРѕР»РѕР¶РёС‚Р»СЊРЅРѕРµ С‡РёСЃР»Рѕ.\n\n";
 			exit(0);
 		}
 	}
 	else
 		threshold = 6;
 
-	// Инициализация keyLength
+	// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ keyLength
 	if (cmdOptionExists(argv, argv + argc, "-k"))
 	{
 		try
@@ -575,14 +575,14 @@ void parse_arguments(int argc, char* argv[], std::string& analiticalTextFileName
 		}
 		catch (...)
 		{
-			std::cout << "Неверно указана длина ключа - положитльное число.\n\n";
+			std::cout << "РќРµРІРµСЂРЅРѕ СѓРєР°Р·Р°РЅР° РґР»РёРЅР° РєР»СЋС‡Р° - РїРѕР»РѕР¶РёС‚Р»СЊРЅРѕРµ С‡РёСЃР»Рѕ.\n\n";
 			exit(0);
 		}
 	}
 	else
 		keyLength = 0;
 
-	// Инициализация maxKeyLength
+	// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ maxKeyLength
 	if (cmdOptionExists(argv, argv + argc, "-mk"))
 	{
 		try
@@ -594,7 +594,7 @@ void parse_arguments(int argc, char* argv[], std::string& analiticalTextFileName
 		}
 		catch (...)
 		{
-			std::cout << "Неверно указана максимальная длина ключа - положитльное число.\n\n";
+			std::cout << "РќРµРІРµСЂРЅРѕ СѓРєР°Р·Р°РЅР° РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° РєР»СЋС‡Р° - РїРѕР»РѕР¶РёС‚Р»СЊРЅРѕРµ С‡РёСЃР»Рѕ.\n\n";
 			exit(0);
 		}
 	}
